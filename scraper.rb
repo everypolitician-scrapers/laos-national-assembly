@@ -53,18 +53,3 @@ def scrape_area(url)
 end
 
 scrape_list('http://na.gov.la/index.php?option=com_content&view=category&id=28&Itemid=223&lang=en')
-
-__END__
-
-# Members
-  data = { 
-    id: "%s-%s" % [name.downcase.gsub(/[[:space:]]+/,'-'), first_seen],
-    name: name,
-    party: tds[2].text.tidy,
-    image: tds[1].css('img/@src').text,
-    term: term[:id],
-    notes: notes,
-    source: url.to_s,
-  }
-  data[:image] = URI.join(url, data[:image]).to_s unless data[:image].to_s.empty?
-end
