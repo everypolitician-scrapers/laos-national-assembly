@@ -36,10 +36,11 @@ end
 def scrape_area(url)
   noko = noko_for(url)
   area_id, area = noko.css('h2').text.tidy.match(/Constituency (\d+), (.*)/).captures
-  noko.css('.article-content tr').each do |tr|
-    tds = tr.css('td') 
-    next unless tds[0] && tds[0].text.match(/\d/)
-    pref, name = remove_prefixes(tds[1].text.tidy.sub('Col.X','Col X'))
+  area = area.match(/[a-zA-Z ]+/).to_s
+  noko.css('.article-content p').children.each do |row|
+    next unless row.class == Nokogiri::XML::Text
+    row_text = row.text.gsub('.',' ').gsub(/\d*/,'').gsub(/([A-Z])/,' \1')
+    pref, name = remove_prefixes(row_text.tidy.sub('Col.X','Col X'))
 
     data = { 
       name: name,
