@@ -47,7 +47,7 @@ def scrape_area(url)
       honorific_prefix: pref,
       area_id: area_id,
       area: area,
-      term: 2011,
+      term: 2016,
     }
     ScraperWiki.save_sqlite([:name, :term], data)
    end
