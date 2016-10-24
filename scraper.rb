@@ -27,7 +27,7 @@ def scrape_list(url)
   end
 end
 
-@prefixes = %w(Assoc Prof Dr Lt Col Colonel Mr Ms Dr).to_set
+@prefixes = %w(Assoc Prof Dr Lt Col Colonel Mr Ms Dr Police Brigadier General).to_set
 def remove_prefixes(name)
   enum = name.split(/\s/).slice_before { |w| !@prefixes.include? w.chomp('.') }
   [enum.take(1), enum.drop(1)].map { |l| l.join ' ' }
