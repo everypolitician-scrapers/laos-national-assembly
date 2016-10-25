@@ -36,8 +36,6 @@ end
 
 def scrape_area(url)
   noko = noko_for(url)
-  area_id, area = noko.css('h2').text.tidy.match(/Constituency (\d+), (.*)/).captures
-  area = area.match(/[a-zA-Z ]+/).to_s
   noko.css('.article-content p').children.each do |row|
     next unless row.class == Nokogiri::XML::Text
     row_text = row.text.gsub('.',' ').gsub(/\d*/,'').gsub(/([A-Z])/,' \1')
@@ -46,12 +44,20 @@ def scrape_area(url)
     data = { 
       name: name,
       honorific_prefix: pref,
-      area_id: area_id,
-      area: area,
+      area_id: area_id_and_name(noko)[0],
+      area: area_id_and_name(noko)[1],
       term: 2016,
     }
     ScraperWiki.save_sqlite([:name, :term], data)
    end
+end
+
+def area_id_and_name(noko)
+  noko.css('h2.contentheading')
+      .text
+      .tidy
+      .match(/Constituency (\d+), (.*)/)
+      .captures
 end
 
 scrape_list('http://na.gov.la/index.php?option=com_content&view=category&id=28&Itemid=223&lang=en')
