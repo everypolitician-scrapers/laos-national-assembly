@@ -15,3 +15,6 @@ gem "open-uri-cached"
 gem "fuzzy_match"
 gem 'wikidata-client', '~> 0.0.7', require: 'wikidata'
 gem 'scraped_page_archive'
+gem 'require_all'
+gem 'field_serializer', github: 'everypolitician/field_serializer'
+gem 'rubocop'
