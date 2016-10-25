@@ -41,7 +41,7 @@ def scrape_area(url)
     pref, name = remove_prefixes(row_text.tidy)
 
     data = { 
-      name: name,
+      name: name.split(' ').map(&:capitalize).join(' '),
       honorific_prefix: pref,
       area_id: area_id_and_name(noko)[0],
       area: area_id_and_name(noko)[1],
