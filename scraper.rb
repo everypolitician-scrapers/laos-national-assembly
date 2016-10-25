@@ -37,7 +37,7 @@ end
 def scrape_area(url)
   noko = noko_for(url)
   noko.xpath('//div[@class="article-content"]//p//text()').each do |row|
-    row_text = row.text.gsub('.',' ').gsub(/\d*/,'').gsub(/([A-Z])/,' \1')
+    row_text = row.text.gsub('.','').gsub(/\d*/,'').gsub(/([a-z](?=[A-Z]))/,'\1 ')
     pref, name = remove_prefixes(row_text.tidy)
 
     data = { 
