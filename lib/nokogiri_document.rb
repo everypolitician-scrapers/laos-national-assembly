@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 require 'field_serializer'
 require 'nokogiri'
 
 class String
   def tidy
-    self.gsub(/[[:space:]]+/, ' ').strip
+    gsub(/[[:space:]]+/, ' ').strip
   end
 end
 

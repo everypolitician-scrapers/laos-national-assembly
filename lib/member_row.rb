@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative 'nokogiri_document'
 
 class MemberRow < NokogiriDocument
@@ -12,7 +13,9 @@ class MemberRow < NokogiriDocument
   private
 
   def row_text
-    @row_text ||= noko.text.gsub('.','').gsub(/\d*/,'').gsub(/([a-z](?=[A-Z]))/,'\1 ').tidy
+    @row_text ||= noko.text.delete('.').gsub(/\d*/, '')
+                      .gsub(/([a-z](?=[A-Z]))/, '\1 ')
+                      .tidy
   end
 
   def prefixes
