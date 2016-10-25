@@ -15,10 +15,14 @@ class MemberRow < NokogiriDocument
     @row_text ||= noko.text.gsub('.','').gsub(/\d*/,'').gsub(/([a-z](?=[A-Z]))/,'\1 ').tidy
   end
 
+  def prefixes
+    %w(Assoc Prof Dr Lt Col
+       Colonel Mr Ms Dr Police Brigadier General).to_set
+  end
 
-  @@prefixes = %w(Assoc Prof Dr Lt Col Colonel Mr Ms Dr Police Brigadier General).to_set
   def name_with_prefixes
-    enum = row_text.split(/\s/).slice_before { |w| !@@prefixes.include? w.chomp('.') }
+    enum = row_text.split(/\s/)
+                   .slice_before { |w| !prefixes.include? w.chomp('.') }
     [enum.take(1), enum.drop(1)].map { |l| l.join ' ' }
   end
 end
